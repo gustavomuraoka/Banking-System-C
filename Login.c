@@ -34,12 +34,12 @@ char * account_Query(char * user_login) {
             getchar();
             fgets(password_given, PASSWORD_LENGHT+1, stdin);
 
-            password_Verify(row, password_given);
-
-            return full_row;
-            /*if (strcmp(password_given, real_password) == 0)
-            printf("\n%s\n", password);*/
-            
+            if (password_Verify(row, password_given) == 0) {
+                printf("Successful Login!");
+                return full_row;
+            } else {
+                return "Wrong Password!";
+            }
         }
     }
 
@@ -48,9 +48,14 @@ char * account_Query(char * user_login) {
 
 int password_Verify(char * row, char * password_given) {
 
-    char * token = strtok(row, " ");
-    /*printf("%s\n", row);*/
-    
+    char password[9];
+    char *password_start = row + 9; //This variable shows where the password starts in the string row. 
 
-    return 0;
+    strncpy(password, password_start, 8); //This function sets the var 'password' to have the password value stored in the database 
+
+    if (strcmp(password_given, password) == 0) {
+        return 0;
+    } else {
+        return -1;
+    }
 }

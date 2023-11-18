@@ -17,10 +17,7 @@ void insertDB(char * user_name, char * password, char * login) {
     } else {
 
         fprintf(Database, "%s %s %s %d\n", login, password, user_name, 0);
-
     }
-
-    
 }
 
 void register_user(){
@@ -50,9 +47,9 @@ void register_user(){
         login[strlen(password)-1] = '\0';
 
         printf("Please, inform your password! NOTE: Passwords should be 8-digit-only! \n");
-        getchar(); 
+        getchar();
         fgets(password, 9, stdin);
-        password[strlen(password)-1] = '\0';
+        /*password[strlen(password)-1] = '\0';*/
 
         printf("Your account info is:\n   LOGIN: %s\n   PASSWORD: %s", login, password);
         insertDB(user_name, password, login);
