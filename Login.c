@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <ctype.h>
-#define PASSWORD_LENGHT 8
+#define PASSWORD_LENGHT 8 
 
 #define MAX_ROW_SIZE 60 // 60 is the number that sums all the info that could be possibly written since users can't get to the 10 billion mark at their accounts
 #define FILENAME "User.txt"

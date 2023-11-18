@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-#include <time.h>
+#include <time.h> 
 
 #define NAME_LENGHT 30
 #define FILENAME "User.txt"
