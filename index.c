@@ -13,6 +13,8 @@ int main () {
     printf("Welcome to the Banking Assistant System\n");
     printf("---------------------------------------\n");
 
+    /*struct User new_user;*/
+
     char user_login[LOGIN_LENGHT];
     char user_password[PASSWORD_LENGHT];
 
