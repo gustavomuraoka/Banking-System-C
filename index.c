@@ -3,7 +3,7 @@
 #include <ctype.h>
 #include "Signup.c" 
 #include "DataValidator.c"
-#include "Login.c" 
+#include "Login.c"
 #define LOGIN_LENGHT 8
 #define PASSWORD_LENGHT 8
 
@@ -26,7 +26,11 @@ int main () {
     }
     else{
         if (strlen(user_login) == LOGIN_LENGHT+1 || verify_numberonly(user_login)){
-            printf("%s\n", account_Query(user_login));
+            User curr_user = account_Query(user_login);
+            printf("\n---------------------------------------");
+            printf("\nHello, %s! \t %d$", curr_user.name, curr_user.money_amount);
+            printf("\n---------------------------------------");
+            printf("\nWhat would you like to do today?\n \t1. Transfer Money\n \t2. Withdraw Money");
         }  
         else {
             printf("Your login has failed!");

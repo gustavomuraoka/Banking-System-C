@@ -11,22 +11,21 @@
 typedef struct User
 {
     char name[15];
-    double money_amount;
+    int money_amount;
 }User;
 
 
 int password_Verify(char * row, char * password_given);
 struct User set_values (char * row);
 
-char * account_Query(char * user_login) {
+struct User account_Query(char * user_login) {
     
     char  row[MAX_ROW_SIZE];
     FILE * Database = fopen(FILENAME, "r");
 
     if ( Database == NULL ) {
-       
        printf("Error trying to achive our database, we are sorry for the inconvenience :/ \n");
-       return 0;
+       exit(1);
     }
 
     while ( fgets( row, MAX_ROW_SIZE, Database ) != NULL ) {
@@ -43,11 +42,10 @@ char * account_Query(char * user_login) {
             fgets(password_given, PASSWORD_LENGHT+1, stdin);
 
             if (password_Verify(row, password_given) == 0) {
-                printf("Successful Login!");
-                set_values(row);
-                return full_row;
+                return set_values(row);
             } else {
-                return "Wrong Password!";
+                printf("Wrong password, crashing app due security reasons!");
+                exit(2);
             }
         }
     }
@@ -84,31 +82,31 @@ struct User set_values (char * row){
     for (int i = 0; row[i+18] != ' '; ++i) {
         name[i] = row[i+18];
     }
-    name[name_lenght] = '\0';
     
-    strcpy(name, new_user.name);
+    name[name_lenght] = '\0';
+
+    strcpy(new_user.name, name);
 
     free(name);
 
     /*This second part is responsible to set the amount of money user has to user.money_amount*/
 
-    printf("aa %s \n", row);
+    int money_first_index = 18 + name_lenght + 1; // (Ignore both login and password) + (Ignore name) + (Ignore space)
+    int money_char_qnty = 0;
 
-    int last_index;
-
-    /*for (last_index = strlen(row); row[last_index] != ' '; last_index--){}*/
-
-    char * money_amount_str = (char *)malloc(strlen(row) - last_index + 1);
-
-    printf("%d\n", last_index);
-
-    for (int i = 0; i + last_index < strlen(row); i++) {
-        printf("i = %d && row[] = %c", i + last_index, row[i + last_index]);
-        money_amount_str[i] = row[i + last_index];
+    for (int i = 0; row[i+money_first_index] != '\n'; i++){
+        money_char_qnty++;
     }
 
-    printf("\n%s\n", money_amount_str);
-    printf("\n%s\n", money_amount_str);
+    char * str_moneyAmount = (char *)malloc(money_char_qnty + 1);
+
+    for (int i = 0; row[i+money_first_index] != '\n'; i++){
+        str_moneyAmount[i] = row[i+money_first_index];
+    }
+
+    new_user.money_amount = atoi(str_moneyAmount);
+    
+    free(str_moneyAmount);
 
     return new_user;
 
