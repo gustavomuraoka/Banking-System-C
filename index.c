@@ -7,6 +7,9 @@
 #define LOGIN_LENGHT 8
 #define PASSWORD_LENGHT 8
 
+int menuSelection(User user);
+int withdrawMoney(User user);
+
 int main () {
 
     printf("---------------------------------------\n");
@@ -27,10 +30,24 @@ int main () {
     else{
         if (strlen(user_login) == LOGIN_LENGHT+1 || verify_numberonly(user_login)){
             User curr_user = account_Query(user_login);
-            printf("\n---------------------------------------");
-            printf("\nHello, %s! \t %d$", curr_user.name, curr_user.money_amount);
-            printf("\n---------------------------------------");
-            printf("\nWhat would you like to do today?\n \t1. Transfer Money\n \t2. Withdraw Money");
+            while (true) {
+                int option = menuSelection(curr_user);
+                switch (option){
+                    case 1:
+                        printf("Tranfer Money!");
+                        break;
+                    case 2:
+                        curr_user.money_amount = withdrawMoney(curr_user);
+                        break;
+                    case 9:
+                        return 0;
+                    default:
+                        printf("Invalid option!");
+                        option = 0;
+                        break;
+                }
+            }
+            
         }  
         else {
             printf("Your login has failed!");
@@ -38,4 +55,22 @@ int main () {
        
     }
 
+}
+
+int menuSelection(User user){
+    printf("\n---------------------------------------");
+    printf("\nHello, %s! \t %d$", user.name, user.money_amount);
+    printf("\n---------------------------------------");
+    printf("\nWhat would you like to do today?\n \t1. Transfer Money\n \t2. Withdraw Money\n \t9. Quit");
+    printf("\nYour selected option: ");
+    int option = 0;
+    scanf("%d", &option);
+    return option;
+}
+
+int withdrawMoney(User user){
+    printf("Money amount being taken: ");
+    int money_taken;
+    scanf("%d", &money_taken);
+    return user.money_amount -= money_taken; 
 }
